@@ -4,6 +4,7 @@
   "private": false,
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
+  "types": "dist/index.d.ts",
   "description": "Load and validate dbt project and profile files",
   "scripts": {
     "build": "rollup -c"
