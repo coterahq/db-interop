@@ -1,8 +1,9 @@
 {
   "name": "@cotera/dbt-interop",
-  "module": "index.ts",
   "type": "module",
   "private": false,
+  "main": "dist/bundle.cjs.js",
+  "module": "dist/bundle.esm.js",
   "scripts": {
     "build": "rollup -c"
   },
@@ -26,5 +27,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/bundle.esm.js",
+      "require": "./dist/bundle.cjs.js"
+    }
   }
 }
