@@ -6,8 +6,8 @@ concurrency:
 
 on:
   push:
-    branches:
-      - main
+    branches-ignore:
+      - main # all branches except main
   workflow_dispatch:
 
 jobs:
@@ -32,4 +32,4 @@ jobs:
         run: bun run build
       
       - name: Test
-        run: bun run test
+        run: bun test
