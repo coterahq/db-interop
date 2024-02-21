@@ -2,6 +2,7 @@
   "name": "@cotera/dbt-interop",
   "module": "lib/index.ts",
   "type": "module",
+  "private": false,
   "scripts": {
     "build": "rollup -c"
   },
@@ -22,5 +23,8 @@
     "neverthrow": "^6.1.0",
     "yaml": "^2.3.4",
     "zod": "^3.22.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
