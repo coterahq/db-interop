@@ -5,6 +5,7 @@
     "module": "ESNext",
     "moduleDetection": "force",
     "allowJs": true,
+    "outDir": "dist/types/esm",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -12,11 +13,13 @@
     "verbatimModuleSyntax": true,
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "dist",
+    "declarationDir": "dist/types/esm",
     /* Linting */
     "skipLibCheck": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["__test__", "dist"],
+  "include": ["lib", "index.ts"]
 }

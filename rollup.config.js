@@ -4,22 +4,24 @@ import commonjs from '@rollup/plugin-commonjs';
 
 export default [
   {
-    input: 'index.ts', // Your TypeScript entry file
+    input: 'index.ts',
     output: [
       {
-        file: 'dist/bundle.cjs.js', // Output file for CommonJS bundle
-        format: 'cjs', // Specify the format as CommonJS
-        sourcemap: true // Optional: Generate source map
+        file: 'dist/cjs/bundle.cjs',
+        format: 'cjs', 
+        sourcemap: true
       },
       {
-        file: 'dist/bundle.esm.js', // Output file for ESM bundle
-        format: 'esm', // Specify the format as ESM
-        sourcemap: true // Optional: Generate source map
+        file: 'dist/esm/bundle.mjs',
+        format: 'esm', 
+        sourcemap: true
       }
     ],
     plugins: [
-      typescript(), // Compile TypeScript files
-      nodeResolve(), // Resolve node modules
+      typescript({
+        tsconfig: 'tsconfig.json'
+      }),
+      nodeResolve(),
       commonjs() // Convert CommonJS modules to ESM
     ]
   }
