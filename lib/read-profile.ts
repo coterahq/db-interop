@@ -1,5 +1,4 @@
-import fs from "fs";
-import { Result, err } from "neverthrow";
+import { Result } from "neverthrow";
 import os from "os";
 import { DbtProfile } from "./dbt";
 import { jinja } from "./jinja";
@@ -23,5 +22,5 @@ export async function readDbtProfile(
 
   return dbtProfile
     .andThen((fileContents) => jinja.template(fileContents))
-    .andThen(DbtProfile.fromFile);
+    .andThen(DbtProfile.fromYamlString);
 }

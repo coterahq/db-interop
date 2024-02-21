@@ -5,7 +5,7 @@ import { ParseError } from "./errors";
 const schema = z.object({
   type: z.literal('redshift'), // Ensures the type is exactly 'redshift'
   host: z.string(),
-  port: z.number(),
+  port: z.coerce.number(),
   user: z.string(),
   pass: z.string(),
   dbname: z.string(),

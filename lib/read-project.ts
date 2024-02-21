@@ -8,23 +8,7 @@ import { readDbtProfile } from "./read-profile";
 import type { Credentials } from "./types";
 
 const projectSchema = z.object({
-  // name: z.string(),
-  // version: z.string(),
   profile: z.string(),
-  // 'config-version': z.number(),
-  // source_paths: z.array(z.string()).optional(),
-  // model_paths: z.array(z.string()).optional(),
-  // test_paths: z.array(z.string()).optional(),
-  // data_paths: z.array(z.string()).optional(),
-  // macro_paths: z.array(z.string()).optional(),
-  // snapshot_paths: z.array(z.string()).optional(),
-  // analysis_paths: z.array(z.string()).optional(),
-  // docs_paths: z.array(z.string()).optional(),
-  // target_path: z.string().optional(),
-  // clean_targets: z.array(z.string()).optional(),
-  // models: z.record(z.any()).optional(), // Can be further detailed based on specific project structure
-  // seeds: z.record(z.any()).optional(), // Can be further detailed
-  // snapshots: z.record(z.any()).optional(), // Can be further detailed
 });
 
 class DbtProject {

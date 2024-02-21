@@ -2,11 +2,11 @@ import { z } from "zod";
 import yaml from "yaml";
 import type { Result } from "neverthrow";
 import { err, ok } from "neverthrow";
-import { Snowflake, type SnowflakeCredentials } from "./snowflake";
-import { BigQuery, type BigQueryCredentials } from "./bigquery";
-import { Redshift, type RedshiftCredentials } from "./redshift";
-import { ParseError } from "./errors";
-import { Postgres, type PostgresCredentials } from "./postgres";
+import { Snowflake } from "./snowflake";
+import { BigQuery } from "./bigquery";
+import { Redshift } from "./redshift";
+import { DatabaseNotSupportedError, ParseError, ProfileNotFoundError, TargetNotFoundError } from "./errors";
+import { Postgres } from "./postgres";
 import type { Credentials } from "./types";
 
 const dbConfigSchema = z.object({
@@ -24,25 +24,6 @@ const dbtProfileSchema = z.record(environmentSchema);
 
 type DbtProfileConfig = z.infer<typeof dbtProfileSchema>;
 
-class TargetNotFoundError extends Error {
-  constructor(name: string) {
-    super(`Target not found: ${name}`);
-  }
-}
-
-class ProfileNotFoundError extends Error {
-  constructor(name: string) {
-    super(`Profile not found: ${name}`);
-  }
-}
-
-
-class DatabaseNotSupportedError extends Error {
-  constructor(type: string) {
-    super(`Database not supported: ${type}`);
-  }
-}
-
 const DB_ADAPTERS = {
   snowflake: Snowflake,
   bigquery: BigQuery,
@@ -50,10 +31,13 @@ const DB_ADAPTERS = {
   postgres: Postgres,
 };
 
+
+export const SUPPORTED_DATABASES = Object.keys(DB_ADAPTERS) as Array<keyof typeof DB_ADAPTERS>;
+
 export class DbtProfile {
   constructor(private config: DbtProfileConfig) {}
 
-  static fromFile(profile: string): Result<DbtProfile, Error> {
+  static fromYamlString(profile: string): Result<DbtProfile, Error> {
     const config = yaml.parse(profile);
     const result = dbtProfileSchema.safeParse(config);
 

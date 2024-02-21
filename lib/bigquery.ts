@@ -10,8 +10,8 @@ const bigQueryConfigSchema = z.object({
   dataset: z.string(),
   keyfile: z.string().optional(), // Path to a JSON key file
   keyfile_json: z.record(z.any()).optional(), // Inline JSON credential
-  timeout_seconds: z.number().optional(),
-  retries: z.number().optional(),
+  timeout_seconds: z.coerce.number().optional(),
+  retries: z.coerce.number().optional(),
 });
 
 const jsonCredentials = z.object({
@@ -31,7 +31,7 @@ export type BigQueryCredentials = z.infer<typeof bigQueryConfigSchema> & {
   credentials: z.infer<typeof jsonCredentials>
 }
 
-class KeyFileNotFoundError extends Error {
+export class KeyFileNotFoundError extends Error {
   constructor(message: string) {
     super(message);
   }
