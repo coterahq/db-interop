@@ -33,12 +33,12 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/esm/bundle.mjs",
-        "types": "./dist/types/esm/index.d.ts"
+        "types": "./dist/types/esm/index.d.ts",
+        "default": "./dist/esm/bundle.mjs"
       },
       "require": {
-        "default": "./dist/cjs/bundle.cjs",
-        "types": "./dist/types/cjs/index.d.ts"
+        "types": "./dist/types/cjs/index.d.ts",
+        "default": "./dist/cjs/bundle.cjs"
       }
     }
   }
