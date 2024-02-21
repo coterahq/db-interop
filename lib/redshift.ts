@@ -7,7 +7,7 @@ const schema = z.object({
   host: z.string(),
   port: z.coerce.number(),
   user: z.string(),
-  pass: z.string(),
+  password: z.string(),
   dbname: z.string(),
   schema: z.string(),
   threads: z.number().optional(),

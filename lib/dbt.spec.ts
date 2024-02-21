@@ -11,6 +11,8 @@ const examleProfile = `
         type: snowflake
         account: my-account
         user: my-user
+        port: 443
+        schema: my-schema
         password: my-password
         role: my-role
         warehouse: my-warehouse
@@ -23,7 +25,7 @@ const examleProfile = `
         host: my-host
         port: 5439
         user: my-user
-        pass: my-password
+        password: my-password
         dbname: my-database
         schema: my-schema
   bigquery:
@@ -54,7 +56,7 @@ const examleProfile = `
         host: my-host
         port: 5439
         user: my-user
-        pass: my-password
+        password: my-password
         dbname: my-database
         schema: my-schema
   unsupported-db:

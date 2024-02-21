@@ -4,15 +4,14 @@ import { ParseError } from "./errors";
 
 const schema = z.object({
   type: z.literal("snowflake"),
-  account: z.string().optional(),
-  database: z.string().optional(),
-  host: z.string().optional(),
-  user: z.string().optional(),
-  password: z.string().optional(),
-  role: z.string().optional(),
-  port: z.number().optional(),
-  warehouse: z.string().optional(),
-  schema: z.string().optional(),
+  account: z.string(),
+  database: z.string(),
+  user: z.string(),
+  password: z.string(),
+  role: z.string(),
+  port: z.coerce.number(),
+  warehouse: z.string(),
+  schema: z.string(),
 });
 
 export type SnowflakeCredentials = z.infer<typeof schema>

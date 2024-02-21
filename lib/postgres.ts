@@ -3,11 +3,11 @@ import { z } from "zod";
 import { ParseError } from "./errors";
 
 const schema = z.object({
-  type: z.literal('postgres'), // Ensures the type is exactly 'redshift'
+  type: z.literal('postgres'),
   host: z.string(),
-  port: z.number(),
+  port: z.coerce.number(),
   user: z.string(),
-  pass: z.string(),
+  password: z.string(),
   dbname: z.string(),
   schema: z.string(),
   threads: z.number().optional(),
