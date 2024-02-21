@@ -1,6 +1,6 @@
 {
   "name": "@cotera/dbt-interop",
-  "module": "lib/index.ts",
+  "module": "index.ts",
   "type": "module",
   "private": false,
   "scripts": {

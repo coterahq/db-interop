@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 
 export default [
   {
-    input: 'lib/index.ts', // Your TypeScript entry file
+    input: 'index.ts', // Your TypeScript entry file
     output: [
       {
         file: 'dist/bundle.cjs.js', // Output file for CommonJS bundle
