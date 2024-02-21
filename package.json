@@ -4,8 +4,9 @@
   "private": false,
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
+  "description": "Load and validate dbt project and profile files",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c && cp package.json dist/package.json"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",

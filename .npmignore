@@ -3,5 +3,7 @@ bun.lockb
 rollup.config.js
 semantic.yml
 __tests__
+.github/
+node_modules/
 
 !dist/
