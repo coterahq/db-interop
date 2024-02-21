@@ -1,16 +1,19 @@
 {
-  "name": "dbt-parser",
-  "module": "index.ts",
+  "name": "dbt-interop",
+  "module": "lib/index.ts",
   "type": "module",
   "scripts": {
     "build": "rollup -c"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^18.6.2",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@semantic-release/npm": "^11.0.2",
     "@types/bun": "latest",
     "rollup": "^4.12.0",
+    "semantic-release": "^23.0.2",
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
