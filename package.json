@@ -4,7 +4,7 @@
   "private": false,
   "main": "dist/cjs/bundle.cjs",
   "module": "dist/esm/bundle.mjs",
-  "types": "dist/esm/types/index.d.ts",
+  "types": "dist/types/esm/index.d.ts",
   "description": "Load and validate dbt project and profile files",
   "scripts": {
     "build": "npx tsc && npx tsc -p tsconfig.cjs.json && rollup -c"
