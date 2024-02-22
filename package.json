@@ -1,13 +1,12 @@
 {
   "name": "@cotera/dbt-interop",
-  "type": "module",
   "private": false,
-  "main": "dist/cjs/bundle.cjs",
-  "module": "dist/esm/bundle.mjs",
-  "types": "dist/types/cjs/index.d.ts",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.mjs",
+  "types": "dist/cjs/index.d.ts",
   "description": "Load and validate dbt project and profile files",
   "scripts": {
-    "build": "npx tsc && npx tsc -p tsconfig.cjs.json && rollup -c"
+    "build": "rollup -c"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
@@ -32,9 +31,17 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/cjs/bundle.cjs",
-      "import": "./dist/esm/bundle.mjs",
-      "types": "./dist/types/esm/index.d.ts"
+      "types": "./dist/esm/index.d.ts",
+      "require": "./dist/cjs/index.cjs",
+      "import": "./dist/esm/index.mjs"
+    },
+    "./cjs": {
+      "require": "./dist/cjs/index.cjs",
+      "types": "./dist/cjs/index.d.ts"
+    },
+    "./esm": {
+      "import": "./dist/esm/index.mjs",
+      "types": "./dist/esm/index.d.ts"
     }
   }
 }

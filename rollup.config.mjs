@@ -7,14 +7,14 @@ export default [
     input: 'index.ts',
     output: [
       {
-        file: 'dist/cjs/bundle.cjs',
+        file: 'dist/cjs/index.cjs',
         format: 'cjs', 
         sourcemap: true
       },
       {
-        file: 'dist/esm/bundle.mjs',
+        file: 'dist/esm/index.mjs',
         format: 'esm', 
-        sourcemap: true
+        sourcemap: true,
       }
     ],
     plugins: [

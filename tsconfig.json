@@ -5,7 +5,7 @@
     "module": "ESNext",
     "moduleDetection": "force",
     "allowJs": true,
-    "outDir": "dist/types/esm",
+    "outDir": "dist",
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -13,7 +13,7 @@
     "verbatimModuleSyntax": true,
     "emitDeclarationOnly": true,
     "declaration": true,
-    "declarationDir": "dist/types/esm",
+    "declarationDir": "dist",
     /* Linting */
     "skipLibCheck": true,
     "strict": true,
