@@ -32,8 +32,9 @@
   },
   "exports": {
     ".": {
+      "require": "./dist/cjs/bundle.cjs",
       "import": "./dist/esm/bundle.mjs",
-      "require": "./dist/cjs/bundle.cjs"
+      "types": "./dist/types/esm/index.d.ts"
     }
   }
 }
