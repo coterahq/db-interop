@@ -53,7 +53,7 @@ export class DbtProfile {
     target?: string
   ): Result<
     Credentials,
-    Error
+    ProfileNotFoundError | TargetNotFoundError | DatabaseNotSupportedError
   > {
     const envConfig = this.config[profile];
 
