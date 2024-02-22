@@ -1,6 +1,7 @@
 {
   "name": "@cotera/dbt-interop",
   "private": false,
+  "type": "commonjs",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
   "types": "dist/cjs/index.d.ts",
@@ -36,12 +37,12 @@
       "import": "./dist/esm/index.mjs"
     },
     "./cjs": {
-      "require": "./dist/cjs/index.cjs",
-      "types": "./dist/cjs/index.d.ts"
+      "types": "./dist/cjs/index.d.ts",
+      "require": "./dist/cjs/index.cjs"
     },
     "./esm": {
-      "import": "./dist/esm/index.mjs",
-      "types": "./dist/esm/index.d.ts"
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.mjs"
     }
   }
 }
