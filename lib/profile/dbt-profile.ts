@@ -5,7 +5,12 @@ import { err, ok } from "neverthrow";
 import { Snowflake } from "./snowflake";
 import { BigQuery } from "./bigquery";
 import { Redshift } from "./redshift";
-import { DatabaseNotSupportedError, ParseError, ProfileNotFoundError, TargetNotFoundError } from "../errors";
+import {
+  DatabaseNotSupportedError,
+  ParseError,
+  ProfileNotFoundError,
+  TargetNotFoundError,
+} from "../errors";
 import { Postgres } from "./postgres";
 import type { Credentials } from "../types";
 import os from "os";
@@ -13,20 +18,19 @@ import { jinja } from "../jinja";
 import path from "path";
 import { createPathOptions, readFile } from "../utils";
 
-const createProfilePaths = (filePath?: string) => {
-  const homeDirectory = os.homedir();
-
-  return createPathOptions([
-    filePath,
-    path.resolve(process.env["DBT_PROFILES_DIR"] ?? process.cwd(), "profiles"),
-    path.resolve(homeDirectory, ".dbt/profiles"),
-  ]);
-};
-
 export async function readDbtProfile(
   filePath?: string
 ): Promise<Result<DbtProfile, Error>> {
-  const dbtProfile = readFile(createProfilePaths(filePath));
+  const dbtProfile = readFile(
+    createPathOptions([
+      filePath,
+      path.resolve(
+        process.env["DBT_PROFILES_DIR"] ?? process.cwd(),
+        "profiles"
+      ),
+      path.resolve(os.homedir(), ".dbt/profiles"),
+    ])
+  );
 
   return dbtProfile
     .andThen((fileContents) => jinja.template(fileContents))
@@ -55,8 +59,9 @@ const DB_ADAPTERS = {
   postgres: Postgres,
 };
 
-
-export const SUPPORTED_DATABASES = Object.keys(DB_ADAPTERS) as Array<keyof typeof DB_ADAPTERS>;
+export const SUPPORTED_DATABASES = Object.keys(DB_ADAPTERS) as Array<
+  keyof typeof DB_ADAPTERS
+>;
 
 export class DbtProfile {
   constructor(private config: DbtProfileConfig) {}
