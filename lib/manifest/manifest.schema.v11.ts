@@ -54,7 +54,7 @@ const v11ModelNode = z.object({
   database: z.union([z.string(), z.null()]),
   schema: z.string(),
   name: z.string(),
-  resource_type: z.string(),
+  resource_type: z.literal('model'),
   package_name: z.string(),
   path: z.string(),
   original_file_path: z.string(),
@@ -77,7 +77,7 @@ export type V11ModelNode = z.infer<typeof v11ModelNode>;
 
 const otherResourcesType = z.object({
   resource_type: z.string(),
-});
+}).passthrough();
 
 export const v11NodesSchema = z
   .record(

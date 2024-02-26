@@ -40,6 +40,8 @@ export class DbtManifest {
   }
 }
 
+export type SupportedDbtManifest = ManifestV11
+
 export class ManifestV11 {
   private constructor(readonly nodes: z.infer<typeof v11NodesSchema>) {
   }
