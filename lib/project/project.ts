@@ -6,7 +6,7 @@ import { z } from "zod";
 import { NoSuchFileError, ParseError } from "../errors";
 import type { Credentials } from "../types";
 import { readDbtProfiles } from "../profile";
-import { Manifest } from "../manifest";
+import { DbtManifest } from "../manifest";
 
 const projectSchema = z.object({
   profile: z.string(),
@@ -29,7 +29,7 @@ export class DbtProject {
   }
 
   async loadManifest(filePath?: string) {
-    return Manifest.fromFile(filePath);
+    return DbtManifest.fromFile(filePath);
   }
 }
 

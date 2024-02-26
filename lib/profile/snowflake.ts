@@ -9,7 +9,7 @@ const schema = z.object({
   user: z.string(),
   password: z.string(),
   role: z.string(),
-  port: z.coerce.number(),
+  port: z.coerce.number().optional().default(443),
   warehouse: z.string(),
   schema: z.string(),
 });

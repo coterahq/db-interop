@@ -12,15 +12,7 @@ export class UnsupportedManifestVersionError extends Error {
   }
 }
 
-export async function loadManifest(filePath?: string) {
-  const options = [filePath, path.join(process.cwd(), 'manifest.json')].filter(t => t !== undefined) as string[]
-  
-  return readFile(options).andThen((fileContents) => {
-    return Manifest.fromConfig(JSON.parse(fileContents))
-  });
-}
-
-export class Manifest {
+export class DbtManifest {
   static fromConfig(object: any): Result<ManifestV11, ParseError | UnsupportedManifestVersionError> {
     const parsed = BaseManifestSchema.safeParse(object)
 
@@ -39,12 +31,16 @@ export class Manifest {
     }
   }
 
-  static fromFile(filePath?: string) {
-    return loadManifest(filePath)
+  static async fromFile(filePath?: string): Promise<Result<ManifestV11, ParseError | UnsupportedManifestVersionError>> {
+    const options = [filePath, path.join(process.cwd(), 'manifest.json')].filter(t => t !== undefined) as string[]
+  
+    return readFile(options).andThen((fileContents) => {
+      return DbtManifest.fromConfig(JSON.parse(fileContents))
+    });
   }
 }
 
-class ManifestV11 {
+export class ManifestV11 {
   private constructor(readonly nodes: z.infer<typeof v11NodesSchema>) {
   }
 

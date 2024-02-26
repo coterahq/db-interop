@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, test, expect } from "bun:test";
-import { Manifest, UnsupportedManifestVersionError } from "./manifest";
+import { DbtManifest, UnsupportedManifestVersionError } from "./manifest";
 import fs from "fs";
 import { assert } from "../utils";
 
@@ -10,7 +10,7 @@ const VERSIONS = [
   ["v8", true],
 ] as const;
 
-describe(Manifest.name, () => {
+describe(DbtManifest.name, () => {
   describe("fromFile", () => {
     VERSIONS.forEach(([version, supported]) => {
       beforeAll(async () => {
@@ -23,7 +23,7 @@ describe(Manifest.name, () => {
 
       describe("given a valid manifest", () => {
         test(`it should return a Manifest`, async () => {
-          const manifest = await Manifest.fromFile(
+          const manifest = await DbtManifest.fromFile(
             `./tmp/${version}.manifest.json`
           );
 
@@ -42,7 +42,7 @@ describe(Manifest.name, () => {
       if (supported) {
         describe("the models method", () => {
           test("it should return the models", async () => {
-            const manifest = await Manifest.fromFile(
+            const manifest = await DbtManifest.fromFile(
               `./tmp/${version}.manifest.json`
             );
 
