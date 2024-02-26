@@ -1,1 +1,1 @@
-export * from './dbt-profile'
+export * from './profiles'
