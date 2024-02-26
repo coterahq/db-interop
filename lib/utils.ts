@@ -26,7 +26,7 @@ export const createPathOptions = (files: (string | undefined)[]): string[] => {
       variations.map((variation) => {
         const parts = path!.split(".")
 
-        if (parts.length > 1) {
+        if (parts.length > 1 && variations.includes(parts.at(-1)!)) {
           return path!;
         }
         
