@@ -1,6 +1,6 @@
 import { err, ok, type Result } from "neverthrow";
 import { z } from "zod";
-import { ParseError } from "./errors";
+import { ParseError } from "../errors";
 
 const schema = z.object({
   type: z.literal('redshift'), // Ensures the type is exactly 'redshift'

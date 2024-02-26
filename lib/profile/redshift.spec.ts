@@ -1,7 +1,7 @@
 import { describe, test, expect } from "bun:test";
 import { Redshift } from "./redshift";
-import { assert } from "./utils";
-import { ParseError } from "./errors";
+import { assert } from "../utils";
+import { ParseError } from "../errors";
 
 describe(Redshift.name, () => {
   describe("given invalid config", () => {

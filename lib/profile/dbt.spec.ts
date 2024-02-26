@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'bun:test';
-import { DbtProfile, SUPPORTED_DATABASES } from './dbt';
-import { assert } from './utils';
-import { DatabaseNotSupportedError, ParseError, ProfileNotFoundError, TargetNotFoundError } from './errors';
+import { DbtProfile, SUPPORTED_DATABASES } from './dbt-profile';
+import { assert } from '../utils';
+import { DatabaseNotSupportedError, ParseError, ProfileNotFoundError, TargetNotFoundError } from '../errors';
 
 const examleProfile = `
   snowflake:

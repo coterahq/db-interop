@@ -1,24 +1,23 @@
 import type { Result } from "neverthrow";
-import { readDbtProfile } from "../lib/read-profile";
-import { readDbtProject } from "../lib/read-project";
+import { readDbtProject, readDbtProfile } from "../lib";
 import type { Credentials } from "../lib/types";
 import { assert } from "../lib/utils";
 
-// const project = await readDbtProject()
+const project = await readDbtProject()
 
-// let creds: Result<Credentials, Error>
+let creds: Result<Credentials, Error>
 
-// if(project.isOk()) { //could be a parse error or no such file error
-//   creds = await project.value.loadCredentials()
-// }
-// else {
-//   const dbtProfile = await readDbtProfile();
+if(project.isOk()) { //could be a parse error or no such file error
+  creds = await project.value.loadCredentials()
+}
+else {
+  const dbtProfile = await readDbtProfile();
 
-//   assert(dbtProfile.isOk())
+  assert(dbtProfile.isOk())
 
-//   const first = dbtProfile.value.list().at(0)!
+  const first = dbtProfile.value.list().at(0)!
   
-//   creds = dbtProfile.value.credentials(first)
-// }
+  creds = dbtProfile.value.credentials(first)
+}
 
-// console.log(creds.isOk() ? creds.value : creds.error.message)
+console.log(creds.isOk() ? creds.value : creds.error.message)

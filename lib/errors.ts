@@ -1,7 +1,8 @@
+import type { ZodError } from "zod";
 
 export class ParseError extends Error {
-  constructor(message: string) {
-    super(message);
+  constructor(message: string | ZodError) {
+    super(JSON.stringify(message, null, 2));
   }
 }
 

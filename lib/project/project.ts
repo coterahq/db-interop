@@ -1,30 +1,38 @@
 import { Result, err, ok } from "neverthrow";
-import { createPathOptions, readFile } from "./utils";
+import { createPathOptions, readFile } from "../utils";
 import path from "path";
 import yaml from "yaml";
 import { z } from "zod";
-import { NoSuchFileError, ParseError } from "./errors";
-import { readDbtProfile } from "./read-profile";
-import type { Credentials } from "./types";
+import { NoSuchFileError, ParseError } from "../errors";
+import type { Credentials } from "../types";
+import { readDbtProfile } from "../profile/dbt-profile";
+import { Manifest } from "../manifest";
 
 const projectSchema = z.object({
   profile: z.string(),
 });
 
-class DbtProject {
+export class DbtProject {
   constructor(readonly config: z.infer<typeof projectSchema>) {}
+
+  static fromFile(filePath?: string) {
+    return readDbtProject(filePath);
+  }
 
   async loadCredentials(filePath?: string, target?: string): Promise<Result<Credentials, Error>> {
     return (await readDbtProfile(filePath)).andThen((profile) => profile.credentials(this.config.profile, target));
+  }
+
+  async loadManifest(filePath?: string) {
+    return Manifest.fromFile(filePath);
   }
 }
 
 export async function readDbtProject(
   filePath?: string,
 ): Promise<Result<DbtProject, ParseError | NoSuchFileError>> {
-  const paths = createPathOptions([
-    filePath,
-    path.join(__dirname, "dbt_project"),
+  const paths = createPathOptions(filePath ? [filePath] : [
+    path.join(process.cwd(), "dbt_project"),
   ]);
 
   return readFile(paths).andThen((fileContents) => {

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { Result, err, ok } from 'neverthrow';
-import { ParseError } from "./errors";
+import { ParseError } from "../errors";
 import fs from 'fs';
 
 const bigQueryConfigSchema = z.object({

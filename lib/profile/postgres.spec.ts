@@ -1,6 +1,6 @@
 import { describe, test, expect } from "bun:test";
-import { assert } from "./utils";
-import { ParseError } from "./errors";
+import { assert } from "../utils";
+import { ParseError } from "../errors";
 import { Postgres } from "./postgres";
 
 describe(Postgres.name, () => {

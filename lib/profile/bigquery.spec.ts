@@ -1,8 +1,8 @@
 import { describe, test, expect, beforeAll, afterAll } from 'bun:test';
-import { BigQuery, KeyFileNotFoundError } from './bigquery';
+import { BigQuery, KeyFileNotFoundError } from '../profile/bigquery';
 import fs from 'fs';
-import { assert } from './utils';
-import { ParseError } from './errors';
+import { assert } from '../utils';
+import { ParseError } from '../errors';
 
 describe(BigQuery.name, () => {
   describe('given key file credentials', () => {
