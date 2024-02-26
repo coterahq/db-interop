@@ -5,7 +5,7 @@ import yaml from "yaml";
 import { z } from "zod";
 import { NoSuchFileError, ParseError } from "../errors";
 import type { Credentials } from "../types";
-import { readDbtProfile } from "../profile/dbt-profile";
+import { readDbtProfiles } from "../profile";
 import { Manifest } from "../manifest";
 
 const projectSchema = z.object({
@@ -19,8 +19,13 @@ export class DbtProject {
     return readDbtProject(filePath);
   }
 
-  async loadCredentials(filePath?: string, target?: string): Promise<Result<Credentials, Error>> {
-    return (await readDbtProfile(filePath)).andThen((profile) => profile.credentials(this.config.profile, target));
+  async loadCredentials(
+    filePath?: string,
+    target?: string
+  ): Promise<Result<Credentials, Error>> {
+    return (await readDbtProfiles(filePath))
+      .andThen((profile) => profile.profile(this.config.profile))
+      .andThen((profile) => profile.credentials(target));
   }
 
   async loadManifest(filePath?: string) {
@@ -29,11 +34,11 @@ export class DbtProject {
 }
 
 export async function readDbtProject(
-  filePath?: string,
+  filePath?: string
 ): Promise<Result<DbtProject, ParseError | NoSuchFileError>> {
-  const paths = createPathOptions(filePath ? [filePath] : [
-    path.join(process.cwd(), "dbt_project"),
-  ]);
+  const paths = createPathOptions(
+    filePath ? [filePath] : [path.join(process.cwd(), "dbt_project")]
+  );
 
   return readFile(paths).andThen((fileContents) => {
     const result = projectSchema.safeParse(yaml.parse(fileContents));

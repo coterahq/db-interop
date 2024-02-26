@@ -81,23 +81,34 @@ export class DbtProfiles {
     return readDbtProfiles(filePath);
   }
 
-  credentials(
-    profile: string,
-    target?: string
-  ): Result<
-    Credentials,
-    ProfileNotFoundError | TargetNotFoundError | DatabaseNotSupportedError
-  > {
+  list(): string[] {
+    return Object.keys(this.config);
+  }
+
+  profile(profile: string): Result<DbtProfile, ProfileNotFoundError> {
     const envConfig = this.config[profile];
 
     if (!envConfig) {
       return err(new ProfileNotFoundError(profile));
     }
 
-    const targetConfig = envConfig.outputs[target ?? envConfig.target];
+    return ok(new DbtProfile(envConfig));
+  }
+}
+
+export class DbtProfile {
+  constructor(readonly config: DbtProfileConfig[number]) {}
+
+  credentials(
+    target?: string
+  ): Result<
+    Credentials,
+    TargetNotFoundError | DatabaseNotSupportedError
+  > {
+    const targetConfig = this.config.outputs[target ?? this.config.target];
 
     if (!targetConfig) {
-      return err(new TargetNotFoundError(target ?? envConfig.target));
+      return err(new TargetNotFoundError(target ?? this.config.target));
     }
 
     const adapter = DB_ADAPTERS[targetConfig.type as keyof typeof DB_ADAPTERS];
@@ -109,17 +120,7 @@ export class DbtProfiles {
     return adapter.fromConfig(targetConfig);
   }
 
-  targets(profile: string): string[] {
-    const envConfig = this.config[profile];
-
-    if (!envConfig) {
-      return [];
-    }
-
-    return Object.keys(envConfig.outputs);
-  }
-
-  list(): string[] {
-    return Object.keys(this.config);
+  targets(): string[] {
+    return Object.keys(this.config.outputs);
   }
 }

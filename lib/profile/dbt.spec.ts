@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test';
-import { DbtProfile, SUPPORTED_DATABASES } from './dbt-profile';
+import { DbtProfiles, SUPPORTED_DATABASES } from './profiles';
 import { assert } from '../utils';
 import { DatabaseNotSupportedError, ParseError, ProfileNotFoundError, TargetNotFoundError } from '../errors';
 
@@ -66,10 +66,10 @@ const examleProfile = `
         type: mariadb
 `;
 
-describe(DbtProfile.name, () => {
+describe(DbtProfiles.name, () => {
   describe('given invalid config', () => {
     test("it should return an error", () => {
-      const dbtProfile = DbtProfile.fromYamlString("invalid: config");
+      const dbtProfile = DbtProfiles.fromYamlString("invalid: config");
       
       assert(dbtProfile.isErr())
 
@@ -79,22 +79,21 @@ describe(DbtProfile.name, () => {
 
   describe('given valid config', () => {
     test("it should return a DbtProfile", () => {
-      const dbtProfile = DbtProfile.fromYamlString(examleProfile);
+      const dbtProfile = DbtProfiles.fromYamlString(examleProfile);
       
       assert(dbtProfile.isOk())
 
-      expect(dbtProfile.value).toBeInstanceOf(DbtProfile);
+      expect(dbtProfile.value).toBeInstanceOf(DbtProfiles);
     })
   })
 
   describe('the credentials method', () => {
     describe('given profile does not exist', () => {
       test("it should return an error", () => {
-        const dbtProfile = DbtProfile.fromYamlString(examleProfile);
-        
-        assert(dbtProfile.isOk())
+        const dbtProfile = DbtProfiles.fromYamlString(examleProfile)
+          .andThen(p => p.profile("invalid-profile"));
 
-        const credentials = dbtProfile.value.credentials("invalid-profile");
+        const credentials = dbtProfile.andThen(p => p.credentials("invalid-profile"));
         
         assert(credentials.isErr())
 
@@ -105,11 +104,12 @@ describe(DbtProfile.name, () => {
 
     describe('given target does not exist', () => {
       test("it should return an error", () => {
-        const dbtProfile = DbtProfile.fromYamlString(examleProfile);
+        const dbtProfile = DbtProfiles.fromYamlString(examleProfile)
+          .andThen(p => p.profile("snowflake"));
         
         assert(dbtProfile.isOk())
 
-        const credentials = dbtProfile.value.credentials("snowflake", "invalid-target");
+        const credentials = dbtProfile.value.credentials("invalid-target");
         
         assert(credentials.isErr())
 
@@ -120,11 +120,12 @@ describe(DbtProfile.name, () => {
 
     describe('given unsupported database', () => {
       test("it should return an error", () => {
-        const dbtProfile = DbtProfile.fromYamlString(examleProfile);
+        const dbtProfile = DbtProfiles.fromYamlString(examleProfile)
+          .andThen(p => p.profile("unsupported-db"));
         
         assert(dbtProfile.isOk())
 
-        const credentials = dbtProfile.value.credentials("unsupported-db");
+        const credentials = dbtProfile.value.credentials();
         
         assert(credentials.isErr())
 
@@ -136,7 +137,8 @@ describe(DbtProfile.name, () => {
     describe('given valid profile and target', () => {
       for(const dbType of SUPPORTED_DATABASES) {
         test(`it should return a ${dbType} instance`, () => {
-          const dbtProfile = DbtProfile.fromYamlString(examleProfile);
+          const dbtProfile = DbtProfiles.fromYamlString(examleProfile)
+            .andThen(p => p.profile(dbType));
           
           assert(dbtProfile.isOk())
 
@@ -152,7 +154,7 @@ describe(DbtProfile.name, () => {
 
   describe('the list method', () => {
     test("it should return a list of profiles", () => {
-      const dbtProfile = DbtProfile.fromYamlString(examleProfile);
+      const dbtProfile = DbtProfiles.fromYamlString(examleProfile);
       
       assert(dbtProfile.isOk())
 
