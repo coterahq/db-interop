@@ -92,12 +92,12 @@ export class DbtProfiles {
       return err(new ProfileNotFoundError(profile));
     }
 
-    return ok(new DbtProfile(envConfig));
+    return ok(new DbtProfile(profile, envConfig));
   }
 }
 
 export class DbtProfile {
-  constructor(readonly config: DbtProfileConfig[number]) {}
+  constructor(readonly name: string, readonly config: DbtProfileConfig[number]) {}
 
   credentials(
     target?: string
