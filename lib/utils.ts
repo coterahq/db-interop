@@ -41,7 +41,7 @@ export const readFile = (
 ): Result<string, NoSuchFileError> => {
   let dbtFile: string | null = null;
   for (const filePath of possibleFileLocations) {
-    if (fs.existsSync(filePath)) {
+    if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile() ) {
       dbtFile = filePath;
       break;
     }
